@@ -13,9 +13,6 @@ logging.basicConfig(level=logging.INFO)
 
 # Инициализация бота
 router = Router()
-bot = Bot(token=TOKEN)
-dp = Dispatcher()
-dp.include_router(router)
 
 #Менеджер баланса
 balance_manager = BalanceManager()
@@ -191,19 +188,3 @@ async def process_release(message: types.Message, state: FSMContext):
 @router.message(lambda message: message.text == "Назад")
 async def back_to_main(message: types.Message):
     await message.answer("Главное меню", reply_markup=main_menu)
-
-
-# Запуск бота
-async def main():
-    try:
-        await dp.start_polling(bot)
-    except TokenValidationError:
-        print("Ошибка: Неверный токен бота!")
-    finally:
-        await bot.session.close()
-
-
-if __name__ == "__main__":
-    import asyncio
-
-    asyncio.run(main())
