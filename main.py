@@ -1,6 +1,7 @@
 from asyncio import run
 from logging import getLogger, basicConfig, INFO
 
+import mainmenu
 from handlers import user_handlers
 from config import TOKEN
 
@@ -20,6 +21,8 @@ async def main() -> None:
     bot = Bot(token=TOKEN)
     dp = Dispatcher()
 
+    
+    dp.include_router(mainmenu.router)
     dp.include_router(user_handlers.router)
 
     await bot.delete_webhook(drop_pending_updates=True)
